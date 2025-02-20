@@ -201,10 +201,10 @@ export default function Sectors() {
                       <Icon className="w-8 h-8 text-white" />
                     </motion.div>
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-semibold text-white">
+                      <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                         {sector.title}
                       </h3>
-                      <p className="text-gray-400 leading-relaxed max-w-xl">
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
                         {sector.description}
                       </p>
                     </div>

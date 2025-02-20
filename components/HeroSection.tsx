@@ -6,8 +6,8 @@ import { ArrowRight, Shield, Zap, LineChart } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      {/* Animated Background Elements - Theme Aware */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-24 md:pt-32 pb-16 md:pb-24">
+      {/* Background Elements - Theme Aware */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-background to-background dark:from-blue-500/10" />
         <motion.div
@@ -29,15 +29,15 @@ export default function HeroSection() {
       </div>
 
       <div className="relative container mx-auto px-4">
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-12rem)] text-center">
           {/* Main Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mb-8"
+            className="max-w-4xl mb-12"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
                 Adversarial Attack
               </span>{" "}
@@ -54,7 +54,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 mb-16"
+            className="flex flex-col sm:flex-row gap-4 mb-20"
           >
             <Button
               size="lg"
@@ -77,7 +77,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl w-full"
           >
             {[
               {
@@ -104,13 +104,24 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                className="bg-white/50 dark:bg-card/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white/50 dark:bg-card/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 
+                          rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300
+                          hover:border-blue-500/50 group"
               >
-                <feature.icon className="w-6 h-6 text-blue-600 dark:text-blue-400 mx-auto mb-3" />
-                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">
+                <feature.icon
+                  className="w-6 h-6 text-blue-600 dark:text-blue-400 mx-auto mb-4 
+                                      group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                />
+                <h3
+                  className="text-gray-900 dark:text-white font-semibold mb-3 text-lg
+                             group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                >
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                <p
+                  className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed
+                             group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors"
+                >
                   {feature.description}
                 </p>
               </motion.div>

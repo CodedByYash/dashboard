@@ -10,12 +10,24 @@ import AboutSection from "@/components/AboutSection";
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <FeatureSection />
-      <Sectors />
-      <AboutSection />
-      <CTASection />
-      <FAQSection />
+      <div id="hero">
+        <HeroSection />
+      </div>
+      <div id="features">
+        <FeatureSection />
+      </div>
+      <div id="about">
+        <AboutSection />
+      </div>
+      <div id="sectors">
+        <Sectors />
+      </div>
+      <div id="faq">
+        <FAQSection />
+      </div>
+      <div id="contact">
+        <CTASection />
+      </div>
     </>
   );
 }

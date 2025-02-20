@@ -31,12 +31,21 @@ export default function FAQSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-24 overflow-hidden bg-background">
+    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-blue-50 via-purple-50/50 to-white dark:from-background dark:via-background dark:to-background/80">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-transparent to-transparent" />
-        <div className="absolute w-[500px] h-[500px] -right-40 top-0 bg-blue-500/20 rounded-full blur-3xl" />
-        <div className="absolute w-[500px] h-[500px] -left-40 bottom-0 bg-purple-500/20 rounded-full blur-3xl" />
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-blue-100/30 via-purple-100/30 to-pink-100/30 
+                        dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10"
+        />
+        <div
+          className="absolute w-[500px] h-[500px] -right-40 top-0 bg-gradient-to-br from-blue-200/40 to-purple-200/40 
+                        dark:bg-blue-500/20 rounded-full blur-3xl animate-pulse"
+        />
+        <div
+          className="absolute w-[500px] h-[500px] -left-40 bottom-0 bg-gradient-to-br from-purple-200/40 to-pink-200/40 
+                        dark:bg-purple-500/20 rounded-full blur-3xl animate-pulse"
+        />
       </div>
 
       <div className="relative container mx-auto px-4">
@@ -48,12 +57,12 @@ export default function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
               Frequently Asked
             </span>{" "}
-            <span className="text-white">Questions</span>
+            <span className="text-gray-900 dark:text-white">Questions</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
             Get answers to common questions about our adversarial attack
             detection system
           </p>
@@ -73,10 +82,14 @@ export default function FAQSection() {
                 onClick={() =>
                   setActiveIndex(activeIndex === index ? null : index)
                 }
-                className="w-full p-6 text-left bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-colors group"
+                className="w-full p-6 text-left bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl 
+                          border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 transition-colors group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  <span
+                    className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 
+                                 dark:group-hover:text-blue-400 transition-colors"
+                  >
                     {faq.question}
                   </span>
                   <motion.div
@@ -85,9 +98,9 @@ export default function FAQSection() {
                     className="ml-4 flex-shrink-0"
                   >
                     {activeIndex === index ? (
-                      <Minus className="w-5 h-5 text-blue-400" />
+                      <Minus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     ) : (
-                      <Plus className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                      <Plus className="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
                     )}
                   </motion.div>
                 </div>
@@ -101,7 +114,7 @@ export default function FAQSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="mt-4 text-gray-400 leading-relaxed">
+                      <p className="mt-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                         {faq.answer}
                       </p>
                     </motion.div>
@@ -115,7 +128,8 @@ export default function FAQSection() {
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute left-1/2 -bottom-4 w-0.5 h-4 bg-gradient-to-b from-blue-500/20 to-transparent"
+                  className="absolute left-1/2 -bottom-4 w-0.5 h-4 bg-gradient-to-b from-blue-200/40 to-transparent 
+                            dark:from-blue-500/20 dark:to-transparent"
                 />
               )}
             </motion.div>
