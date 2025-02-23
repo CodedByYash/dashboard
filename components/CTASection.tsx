@@ -22,31 +22,34 @@ export default function CTASection() {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-blue-50 via-purple-50/50 to-white dark:from-background dark:via-background dark:to-background/80">
+    <section
+      className="relative py-24 overflow-hidden bg-gradient-to-b from-indigo-50 via-purple-50/50 to-pink-50 
+                        dark:from-indigo-950 dark:via-purple-950 dark:to-pink-950"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Enhanced gradient overlay */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="absolute inset-0 bg-gradient-to-r from-blue-100/30 via-purple-100/30 to-pink-100/30 
-                     dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10"
+          className="absolute inset-0 bg-gradient-to-r from-indigo-100/30 via-purple-100/30 to-pink-100/30 
+                     dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10"
         />
 
         {/* Enhanced glowing orbs */}
         <div
-          className="absolute w-[500px] h-[500px] -left-40 top-0 bg-gradient-to-br from-blue-200/40 to-purple-200/40 
-                        dark:bg-blue-500/20 rounded-full blur-3xl animate-pulse"
+          className="absolute w-[500px] h-[500px] -left-40 top-0 bg-gradient-to-br from-indigo-200/40 to-purple-200/40 
+                              dark:from-indigo-500/20 dark:to-purple-500/20 rounded-full blur-3xl animate-pulse"
         />
         <div
           className="absolute w-[500px] h-[500px] -right-40 bottom-0 bg-gradient-to-br from-purple-200/40 to-pink-200/40 
-                        dark:bg-purple-500/20 rounded-full blur-3xl animate-pulse"
+                              dark:from-purple-500/20 dark:to-pink-500/20 rounded-full blur-3xl animate-pulse"
         />
 
         {/* Subtle pattern overlay */}
         <div
           className="absolute inset-0 bg-[linear-gradient(to_right,#88888808_1px,transparent_1px),linear-gradient(to_bottom,#88888808_1px,transparent_1px)] 
-                        bg-[size:24px_24px] opacity-50"
+                              bg-[size:24px_24px] opacity-50"
         />
       </div>
 

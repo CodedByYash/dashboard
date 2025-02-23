@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { BarChart, Layers, Shield, Search } from "lucide-react"; // Icons
+import Link from "next/link";
 
 const features = [
   {
@@ -8,24 +9,28 @@ const features = [
     description:
       "See how adversarial robustness is tested across healthcare, finance, and more.",
     icon: Layers,
+    href: "/features/model-sectors",
   },
   {
     title: "Advanced Visualization",
     description:
       "Explore graphs showing attack success rates and model accuracy under adversarial conditions.",
     icon: BarChart,
+    href: "/features/visualization",
   },
   {
     title: "Adversarial Attack Methods",
     description:
       "Analyze 8 different attack techniques and their impact on AI models.",
     icon: Search,
+    href: "/features/attack-methods",
   },
   {
     title: "Performance Analysis & Insights",
     description:
       "Compare model performance before and after applying defense strategies.",
     icon: Shield,
+    href: "/features/performance-analysis",
   },
 ];
 
@@ -81,43 +86,44 @@ export default function FeatureSection() {
         {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-xl md:rounded-2xl shadow-lg 
-                       border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 
-                       hover:shadow-xl dark:hover:shadow-blue-500/10 transition-all duration-300"
-            >
-              <div
-                className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent dark:from-blue-500/10 
-                        rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
-              <div className="relative">
+            <Link key={index} href={feature.href}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-xl md:rounded-2xl 
+                           shadow-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 
+                           hover:shadow-xl dark:hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer"
+              >
                 <div
-                  className="mb-4 md:mb-6 inline-block p-2.5 md:p-3 bg-blue-100/50 dark:bg-blue-500/10 rounded-lg md:rounded-xl 
-                          group-hover:bg-blue-200/50 dark:group-hover:bg-blue-500/20 transition-colors duration-300"
-                >
-                  <feature.icon
-                    className="w-6 h-6 md:w-8 md:h-8 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 
-                           transition-colors duration-300"
-                  />
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent dark:from-blue-500/10 
+                          rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="relative">
+                  <div
+                    className="mb-4 md:mb-6 inline-block p-2.5 md:p-3 bg-blue-100/50 dark:bg-blue-500/10 rounded-lg md:rounded-xl 
+                            group-hover:bg-blue-200/50 dark:group-hover:bg-blue-500/20 transition-colors duration-300"
+                  >
+                    <feature.icon
+                      className="w-6 h-6 md:w-8 md:h-8 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 
+                             transition-colors duration-300"
+                    />
+                  </div>
+                  <h3
+                    className="text-lg md:text-xl font-bold mb-2 md:mb-4 text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 
+                           transition-colors duration-300 line-clamp-2"
+                  >
+                    {feature.title}
+                  </h3>
+                  <p
+                    className="text-sm md:text-base text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 
+                           transition-colors duration-300 leading-relaxed line-clamp-3"
+                  >
+                    {feature.description}
+                  </p>
                 </div>
-                <h3
-                  className="text-lg md:text-xl font-bold mb-2 md:mb-4 text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 
-                         transition-colors duration-300 line-clamp-2"
-                >
-                  {feature.title}
-                </h3>
-                <p
-                  className="text-sm md:text-base text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 
-                         transition-colors duration-300 leading-relaxed line-clamp-3"
-                >
-                  {feature.description}
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>

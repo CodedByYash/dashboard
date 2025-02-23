@@ -3,8 +3,32 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Zap, LineChart } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { SignInButton } from "@clerk/nextjs";
 
 export default function HeroSection() {
+  const { isLoaded, isSignedIn } = useUser();
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    if (isSignedIn) {
+      router.push("/dashboard");
+    }
+  };
+
+  const handleLearnMore = () => {
+    const featuresSection = document.getElementById("features");
+    if (featuresSection) {
+      const navbarHeight = 64; // height of navbar
+      const elementPosition = featuresSection.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-24 md:pt-32 pb-16 md:pb-24">
       {/* Background Elements - Theme Aware */}
@@ -44,29 +68,49 @@ export default function HeroSection() {
               <span className="text-foreground">Detection Dashboard</span>
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-              Protect your AI models with real-time detection and visualization
-              of adversarial attacks.
+              Analyze, visualize adversarial attacks with interactive
+              dashboards.
             </p>
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* Updated CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4 mb-20"
           >
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 text-white px-8 py-6 rounded-xl flex items-center gap-2 text-lg font-semibold"
-            >
-              Get Started
-              <ArrowRight className="w-5 h-5" />
-            </Button>
+            {isLoaded &&
+              (isSignedIn ? (
+                <Button
+                  size="lg"
+                  onClick={handleGetStarted}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 
+                           hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 rounded-xl 
+                           flex items-center gap-2 text-lg font-semibold"
+                >
+                  Get Started
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              ) : (
+                <SignInButton mode="modal">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 
+                             hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 rounded-xl 
+                             flex items-center gap-2 text-lg font-semibold"
+                  >
+                    Get Started
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </SignInButton>
+              ))}
             <Button
               size="lg"
               variant="outline"
-              className="border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground px-8 py-6 rounded-xl flex items-center gap-2 text-lg font-semibold"
+              onClick={handleLearnMore}
+              className="border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 
+                       text-foreground px-8 py-6 rounded-xl flex items-center gap-2 text-lg font-semibold"
             >
               Learn More
             </Button>
