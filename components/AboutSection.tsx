@@ -5,9 +5,9 @@ import { ShieldCheck, BrainCircuit, Eye, Radar } from "lucide-react";
 
 const stats = [
   { value: "95%+", label: "Adversarial Detection Accuracy" },
-  { value: "10+", label: "Attack Strategies Evaluated" },
-  { value: "5000+", label: "Models Tested & Analyzed" },
-  { value: "<100ms", label: "Evaluation Speed per Sample" },
+  { value: "8", label: "Attack Strategies Evaluated" },
+  { value: "10+", label: "Models Tested & Analyzed" },
+  { value: "<2 Minutes", label: "Evaluation Speed per Sample" },
 ];
 
 const highlights = [
@@ -59,7 +59,7 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -80,7 +80,7 @@ export default function AboutSection() {
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
             {stats.map((stat, index) => (
-              <motion.div
+      <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ export default function AboutSection() {
                 </div>
               </motion.div>
             ))}
-          </div>
+        </div>
 
           {/* Highlights Grid */}
           <div className="grid md:grid-cols-2 gap-8">
@@ -118,7 +118,7 @@ export default function AboutSection() {
                       <div>
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                           {item.title}
-                        </h3>
+          </h3>
                         <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                           {item.description}
                         </p>
@@ -128,7 +128,7 @@ export default function AboutSection() {
                 </motion.div>
               );
             })}
-          </div>
+        </div>
 
           {/* Mission Statement */}
           <motion.div

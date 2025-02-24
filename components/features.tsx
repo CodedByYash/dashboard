@@ -57,39 +57,39 @@ export default function FeatureSection() {
 
       {/* Rest of your existing content with relative positioning */}
       <div className="relative">
-        {/* Title & Subheading */}
+      {/* Title & Subheading */}
         <div className="text-center mb-10 md:mb-16">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
             className="inline-block mb-4"
-          >
+        >
             <div className="text-blue-600 dark:text-blue-400 font-semibold mb-2 text-sm md:text-base tracking-wider">
               FEATURES
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 leading-tight">
-              Understanding Adversarial Robustness
+          Understanding Adversarial Robustness
             </h2>
           </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-4 md:mt-6 text-muted-foreground text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2"
-          >
+        >
             Explore how our AI model performs across different sectors and
             attack scenarios.
-          </motion.p>
-        </div>
+        </motion.p>
+      </div>
 
-        {/* Feature Cards */}
+      {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {features.map((feature, index) => (
+        {features.map((feature, index) => (
             <Link key={index} href={feature.href}>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group relative bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-xl md:rounded-2xl 
                            shadow-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 
@@ -122,9 +122,9 @@ export default function FeatureSection() {
                     {feature.description}
                   </p>
                 </div>
-              </motion.div>
+          </motion.div>
             </Link>
-          ))}
+        ))}
         </div>
       </div>
     </section>

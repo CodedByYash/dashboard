@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { UserNav } from "./UserNav";
 
 const navigation = [
   { name: "Home", href: "hero" },
@@ -59,7 +60,7 @@ export default function Navbar() {
                 Detect
               </span>
             </motion.div>
-          </Link>
+            </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
@@ -88,14 +89,7 @@ export default function Navbar() {
             {isLoaded && (
               <div className="flex items-center space-x-4">
                 {user ? (
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        userButtonAvatarBox: "w-8 h-8",
-                        userButtonTrigger: "focus:shadow-none",
-                      },
-                    }}
-                  />
+                  <UserNav />
                 ) : (
                   <>
                     <SignInButton mode="modal">
@@ -114,7 +108,7 @@ export default function Navbar() {
                     </SignUpButton>
                   </>
                 )}
-              </div>
+            </div>
             )}
           </div>
 
@@ -178,11 +172,11 @@ export default function Navbar() {
                     </SignUpButton>
                   </div>
                 )}
-              </div>
+      </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+    </nav>
     </header>
   );
 }

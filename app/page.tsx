@@ -14,7 +14,7 @@ export default function Home() {
         <HeroSection />
       </div>
       <div id="features">
-        <FeatureSection />
+      <FeatureSection />
       </div>
       <div id="about">
         <AboutSection />
