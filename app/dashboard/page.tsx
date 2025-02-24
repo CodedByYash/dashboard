@@ -9,7 +9,7 @@ import Link from "next/link";
 interface Sector {
   title: string;
   description: string;
-  icon: any;
+  icon: React.ElementType;
   color: string;
   borderColor: string;
   href: string;

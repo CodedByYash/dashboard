@@ -38,11 +38,6 @@ const attackResults = [
   { attack: "L-BFGS", normal: 75.57, randomized: 75.4 },
 ];
 
-const initialResults = [
-  { type: "Normal", accuracy: 97.82 },
-  { type: "Randomized Defense", accuracy: 97.0 },
-];
-
 const trainingResults = [
   { epoch: 1, accuracy: 95.13 },
   { epoch: 2, accuracy: 96.25 },

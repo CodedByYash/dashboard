@@ -59,7 +59,7 @@ export default function VisualizationPage() {
             </span>
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg mb-12">
-            Explore our model's performance through interactive charts and
+            Explore our model&apos;s performance through interactive charts and
             real-time data visualization.
           </p>
 

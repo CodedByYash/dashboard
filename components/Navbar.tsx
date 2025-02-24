@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserNav } from "./UserNav";
@@ -60,7 +60,7 @@ export default function Navbar() {
                 Detect
               </span>
             </motion.div>
-            </Link>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
@@ -108,7 +108,7 @@ export default function Navbar() {
                     </SignUpButton>
                   </>
                 )}
-            </div>
+              </div>
             )}
           </div>
 
@@ -172,11 +172,11 @@ export default function Navbar() {
                     </SignUpButton>
                   </div>
                 )}
-      </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-    </nav>
+      </nav>
     </header>
   );
 }

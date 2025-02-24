@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Hospital, Building2, Car, Shield } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
