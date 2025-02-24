@@ -63,7 +63,7 @@ export default function CTASection() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                Let's Collaborate
+                Let&apos;s Collaborate
               </span>
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
