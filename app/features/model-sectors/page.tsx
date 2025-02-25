@@ -1,17 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Hospital,
-  Building2,
-  Car,
-  Shield,
-  Network,
-  Cpu,
-  Lock,
-  Zap,
-  Smartphone,
-} from "lucide-react";
+import { Hospital, Building2, Car, Shield, Network, Lock } from "lucide-react";
 
 const modelArchitecture = [
   {
