@@ -135,6 +135,8 @@ const chartTypes = {
   individual: [
     { id: "bar", name: "Bar Comparison", icon: BarChart2 },
     { id: "radar", name: "Radar Analysis", icon: RadarIcon },
+    { id: "pie", name: "Pie Chart", icon: PieChartIcon },
+    { id: "area", name: "Area Chart", icon: Activity },
   ],
 };
 
@@ -381,6 +383,201 @@ export default function CybersecurityPage() {
     }
   };
 
+  const renderIndividualAttackGraph = (
+    chartType: string,
+    attackData: any[]
+  ) => {
+    if (attackData.length === 0) return null;
+
+    switch (chartType) {
+      case "radar":
+        // Transform data for radar chart
+        const radarData = [
+          {
+            metric: "Normal Defense",
+            value: attackData[0].normal,
+          },
+          {
+            metric: "Randomized Defense",
+            value: attackData[0].randomized,
+          },
+        ];
+
+        return (
+          <ResponsiveContainer>
+            <RadarChart data={radarData}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="metric" />
+              <PolarRadiusAxis domain={[0, 100]} />
+              <Radar
+                name={`${attackData[0].attack} Defense`}
+                dataKey="value"
+                stroke="#4f46e5"
+                fill="#4f46e5"
+                fillOpacity={0.6}
+              />
+              <Tooltip formatter={(value: number) => value.toFixed(2) + "%"} />
+              <Legend />
+            </RadarChart>
+          </ResponsiveContainer>
+        );
+
+      case "pie":
+        // Transform data for pie chart
+        const pieData = [
+          { name: "Normal Defense", value: attackData[0].normal },
+          { name: "Randomized Defense", value: attackData[0].randomized },
+        ];
+
+        return (
+          <ResponsiveContainer>
+            <PieChart>
+              <Pie
+                data={pieData}
+                innerRadius={60}
+                outerRadius={80}
+                fill="#8884d8"
+                paddingAngle={5}
+                dataKey="value"
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(2)}%`
+                }
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value: number) => value.toFixed(2) + "%"} />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+
+      case "area":
+        // Transform data for area chart
+        const areaData = [
+          {
+            category: "Defense Rate",
+            normal: attackData[0].normal,
+            randomized: attackData[0].randomized,
+          },
+        ];
+
+        return (
+          <ResponsiveContainer>
+            <AreaChart data={areaData}>
+              <defs>
+                <linearGradient id="colorNormal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient
+                  id="colorRandomized"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="category" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip formatter={(value: number) => value.toFixed(2) + "%"} />
+              <Legend />
+              <Area
+                type="monotone"
+                dataKey="normal"
+                stroke="#4f46e5"
+                fillOpacity={1}
+                fill="url(#colorNormal)"
+                name="Normal Defense"
+              />
+              <Area
+                type="monotone"
+                dataKey="randomized"
+                stroke="#06b6d4"
+                fillOpacity={1}
+                fill="url(#colorRandomized)"
+                name="Randomized Defense"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+
+      default:
+        // Bar chart (default)
+        const attack = attackData[0];
+        const difference = Math.abs(attack.normal - attack.randomized);
+
+        // If difference is small, use a zoomed-in view
+        if (difference < 5) {
+          const avgValue = (attack.normal + attack.randomized) / 2;
+          const yAxisMin = Math.floor(avgValue - 5);
+          const yAxisMax = Math.ceil(avgValue + 5);
+
+          return (
+            <ResponsiveContainer>
+              <BarChart data={attackData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="attack" />
+                <YAxis
+                  domain={[yAxisMin, yAxisMax]}
+                  tickFormatter={(value) => value.toFixed(2) + "%"}
+                />
+                <Tooltip
+                  formatter={(value: number) => value.toFixed(2) + "%"}
+                />
+                <Legend />
+                <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5">
+                  <LabelList
+                    dataKey="normal"
+                    position="top"
+                    formatter={(value: number) => value.toFixed(2) + "%"}
+                  />
+                </Bar>
+                <Bar
+                  dataKey="randomized"
+                  name="Randomized Defense"
+                  fill="#06b6d4"
+                >
+                  <LabelList
+                    dataKey="randomized"
+                    position="top"
+                    formatter={(value: number) => value.toFixed(2) + "%"}
+                  />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          );
+        }
+
+        // Default view for larger differences
+        return (
+          <ResponsiveContainer>
+            <BarChart data={attackData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="attack" />
+              <YAxis domain={[50, 100]} />
+              <Tooltip formatter={(value: number) => value.toFixed(2) + "%"} />
+              <Legend />
+              <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5" />
+              <Bar
+                dataKey="randomized"
+                name="Randomized Defense"
+                fill="#06b6d4"
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+    }
+  };
+
   const renderGraph = () => {
     if (selectedAttack === "training") {
       return renderTrainingGraph(selectedChartType);
@@ -389,6 +586,7 @@ export default function CybersecurityPage() {
       return renderComparisonGraph(selectedChartType);
     }
 
+    // Individual attack visualization
     const attackData = attackResults.filter((a) => {
       // Normalize both strings for comparison
       const normalizeString = (str: string) =>
@@ -404,65 +602,9 @@ export default function CybersecurityPage() {
       return attackName === selected;
     });
 
-    if (attackData.length > 0) {
-      const attack = attackData[0];
-      const difference = Math.abs(attack.normal - attack.randomized);
+    if (attackData.length === 0) return null;
 
-      // If difference is small, use a zoomed-in view
-      if (difference < 5) {
-        const avgValue = (attack.normal + attack.randomized) / 2;
-        const yAxisMin = Math.floor(avgValue - 5);
-        const yAxisMax = Math.ceil(avgValue + 5);
-
-        return (
-          <ResponsiveContainer>
-            <BarChart data={attackData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="attack" />
-              <YAxis
-                domain={[yAxisMin, yAxisMax]}
-                tickFormatter={(value) => value.toFixed(2) + "%"}
-              />
-              <Tooltip formatter={(value: number) => value.toFixed(2) + "%"} />
-              <Legend />
-              <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5">
-                <LabelList
-                  dataKey="normal"
-                  position="top"
-                  formatter={(value: number) => value.toFixed(2) + "%"}
-                />
-              </Bar>
-              <Bar
-                dataKey="randomized"
-                name="Randomized Defense"
-                fill="#06b6d4"
-              >
-                <LabelList
-                  dataKey="randomized"
-                  position="top"
-                  formatter={(value: number) => value.toFixed(2) + "%"}
-                />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        );
-      }
-    }
-
-    // Default view for larger differences
-    return (
-      <ResponsiveContainer>
-        <BarChart data={attackData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="attack" />
-          <YAxis domain={[50, 100]} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5" />
-          <Bar dataKey="randomized" name="Randomized Defense" fill="#06b6d4" />
-        </BarChart>
-      </ResponsiveContainer>
-    );
+    return renderIndividualAttackGraph(selectedChartType, attackData);
   };
 
   return (
@@ -488,7 +630,7 @@ export default function CybersecurityPage() {
             <Menu className="h-5 w-5" />
           </Button>
 
-          <div className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-6rem)]">
+          <div className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-6rem)] scroll-smooth">
             <div className="mb-6">
               <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
                 Analysis Type

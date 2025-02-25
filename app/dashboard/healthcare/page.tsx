@@ -41,33 +41,38 @@ import { Button } from "@/components/ui/button";
 
 // Convert CSV data to chart format
 const attackResults = [
-  { attack: "FGSM", normal: 82.23, randomized: 82.23 },
-  { attack: "I-FGSM", normal: 79.44, randomized: 81.22 },
-  { attack: "BIM", normal: 79.44, randomized: 81.22 },
-  { attack: "PGD", normal: 86.55, randomized: 85.03 },
-  { attack: "DeepFool", normal: 95.18, randomized: 95.94 },
-  { attack: "JSMA", normal: 96.19, randomized: 95.94 },
-  { attack: "C&W", normal: 0.0, randomized: 69.8 },
-  { attack: "L-BFGS", normal: 33.5, randomized: 73.86 },
+  { attack: "FGSM", normal: 40.9, randomized: 48.05 },
+  { attack: "I-FGSM", normal: 33.11, randomized: 45.45 },
+  { attack: "BIM", normal: 33.11, randomized: 45.45 },
+  { attack: "PGD", normal: 35.06, randomized: 51.29 },
+  { attack: "DeepFool", normal: 48.05, randomized: 65.58 },
+  { attack: "JSMA", normal: 62.33, randomized: 69.48 },
+  { attack: "C&W", normal: 50.0, randomized: 63.63 },
+  { attack: "L-BFGS", normal: 33.06, randomized: 63.63 },
 ];
 
 const trainingResults = [
-  { epoch: 1, accuracy: 89.07 },
-  { epoch: 2, accuracy: 95.74 },
-  { epoch: 3, accuracy: 96.32 },
-  { epoch: 4, accuracy: 96.82 },
-  { epoch: 5, accuracy: 96.82 },
-  { epoch: 6, accuracy: 97.01 },
-  { epoch: 7, accuracy: 97.59 },
-  { epoch: 8, accuracy: 97.08 },
-  { epoch: 9, accuracy: 97.2 },
-  { epoch: 10, accuracy: 97.52 },
+  { epoch: 1, accuracy: 70.19 },
+  { epoch: 2, accuracy: 76.71 },
+  { epoch: 3, accuracy: 77.52 },
+  { epoch: 4, accuracy: 78.82 },
+  { epoch: 5, accuracy: 78.66 },
+  { epoch: 6, accuracy: 77.19 },
+  { epoch: 7, accuracy: 78.33 },
+  { epoch: 8, accuracy: 79.31 },
+  { epoch: 9, accuracy: 79.8 },
+  { epoch: 10, accuracy: 80.78 },
+  { epoch: 11, accuracy: 79.96 },
+  { epoch: 12, accuracy: 80.45 },
+  { epoch: 13, accuracy: 79.64 },
+  { epoch: 14, accuracy: 80.29 },
+  { epoch: 15, accuracy: 79.64 },
 ];
 
 const metrics = [
   {
     title: "Best Defense Rate",
-    value: "96.19%",
+    value: "69.48%",
     subtitle: "Against JSMA Attack",
     icon: Shield,
     color: "text-green-500",
@@ -75,7 +80,7 @@ const metrics = [
   },
   {
     title: "Training Accuracy",
-    value: "97.52%",
+    value: "80.78%",
     subtitle: "Final Epoch",
     icon: TrendingUp,
     color: "text-blue-500",
