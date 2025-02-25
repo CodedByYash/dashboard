@@ -170,14 +170,14 @@ export default function AttackMethodsPage() {
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: i * 0.1 }}
-                                className="flex items-center justify-end gap-3"
+                                className="flex items-center gap-3"
                               >
-                                <span className="text-gray-600 dark:text-gray-400">
-                                  {detail}
-                                </span>
                                 <span
                                   className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${attack.color}`}
                                 />
+                                <span className="text-gray-600 dark:text-gray-400">
+                                  {detail}
+                                </span>
                               </motion.div>
                             ))}
                           </div>
