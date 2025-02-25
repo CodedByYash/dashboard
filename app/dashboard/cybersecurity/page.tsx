@@ -14,6 +14,16 @@ import {
   Legend,
   ResponsiveContainer,
   LabelList,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
 } from "recharts";
 import {
   Shield,
@@ -23,6 +33,9 @@ import {
   Menu,
   BarChart2,
   Activity,
+  PieChart as PieChartIcon,
+  RadarIcon,
+  LineChart as LineChartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -99,8 +112,35 @@ const attackOptions = [
   { id: "lbfgs", name: "L-BFGS", icon: Shield },
 ];
 
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884d8",
+  "#82ca9d",
+];
+
+const chartTypes = {
+  training: [
+    { id: "line", name: "Line Chart", icon: LineChartIcon },
+    { id: "area", name: "Area Chart", icon: Activity },
+    { id: "radar", name: "Radar Progress", icon: RadarIcon },
+  ],
+  comparison: [
+    { id: "bar", name: "Bar Comparison", icon: BarChart2 },
+    { id: "radar", name: "Radar Analysis", icon: RadarIcon },
+    { id: "pie", name: "Distribution", icon: PieChartIcon },
+  ],
+  individual: [
+    { id: "bar", name: "Bar Comparison", icon: BarChart2 },
+    { id: "radar", name: "Radar Analysis", icon: RadarIcon },
+  ],
+};
+
 export default function CybersecurityPage() {
   const [selectedAttack, setSelectedAttack] = useState("training");
+  const [selectedChartType, setSelectedChartType] = useState("line");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const getAttackMetrics = (attackId: string) => {
@@ -186,47 +226,167 @@ export default function CybersecurityPage() {
     ];
   };
 
+  const renderTrainingGraph = (chartType: string) => {
+    switch (chartType) {
+      case "area":
+        return (
+          <ResponsiveContainer>
+            <AreaChart data={trainingResults}>
+              <defs>
+                <linearGradient id="colorAccuracy" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="epoch" />
+              <YAxis domain={[94, 98]} />
+              <Tooltip />
+              <Legend />
+              <Area
+                type="monotone"
+                dataKey="accuracy"
+                stroke="#8884d8"
+                fillOpacity={1}
+                fill="url(#colorAccuracy)"
+                name="Training Accuracy"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+      case "radar":
+        return (
+          <ResponsiveContainer>
+            <RadarChart data={trainingResults}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="epoch" />
+              <PolarRadiusAxis domain={[94, 98]} />
+              <Radar
+                name="Accuracy"
+                dataKey="accuracy"
+                stroke="#8884d8"
+                fill="#8884d8"
+                fillOpacity={0.6}
+              />
+              <Legend />
+            </RadarChart>
+          </ResponsiveContainer>
+        );
+      default:
+        return (
+          <ResponsiveContainer>
+            <LineChart data={trainingResults}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="epoch" />
+              <YAxis domain={[94, 98]} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="accuracy"
+                stroke="#8884d8"
+                strokeWidth={2}
+                dot={{ fill: "#8884d8" }}
+                name="Training Accuracy"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        );
+    }
+  };
+
+  const renderComparisonGraph = (chartType: string) => {
+    switch (chartType) {
+      case "radar":
+        const radarData = attackResults.map((attack) => ({
+          attack: attack.attack,
+          normal: attack.normal,
+          randomized: attack.randomized,
+        }));
+        return (
+          <ResponsiveContainer>
+            <RadarChart data={radarData}>
+              <PolarGrid />
+              <PolarAngleAxis dataKey="attack" />
+              <PolarRadiusAxis domain={[50, 100]} />
+              <Radar
+                name="Normal Defense"
+                dataKey="normal"
+                stroke="#4f46e5"
+                fill="#4f46e5"
+                fillOpacity={0.6}
+              />
+              <Radar
+                name="Randomized Defense"
+                dataKey="randomized"
+                stroke="#06b6d4"
+                fill="#06b6d4"
+                fillOpacity={0.6}
+              />
+              <Legend />
+            </RadarChart>
+          </ResponsiveContainer>
+        );
+      case "pie":
+        const pieData = attackResults.map((attack) => ({
+          name: attack.attack,
+          value: attack.randomized,
+        }));
+        return (
+          <ResponsiveContainer>
+            <PieChart>
+              <Pie
+                data={pieData}
+                innerRadius={60}
+                outerRadius={80}
+                fill="#8884d8"
+                paddingAngle={5}
+                dataKey="value"
+                label
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+      default:
+        return (
+          <ResponsiveContainer>
+            <BarChart data={attackResults}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="attack" />
+              <YAxis domain={[50, 100]} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5">
+                <LabelList position="top" />
+              </Bar>
+              <Bar
+                dataKey="randomized"
+                name="Randomized Defense"
+                fill="#06b6d4"
+              >
+                <LabelList position="top" />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        );
+    }
+  };
+
   const renderGraph = () => {
     if (selectedAttack === "training") {
-      return (
-        <ResponsiveContainer>
-          <LineChart data={trainingResults}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="epoch" />
-            <YAxis domain={[94, 98]} />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="accuracy"
-              stroke="#8b5cf6"
-              strokeWidth={2}
-              dot={{ fill: "#8b5cf6" }}
-              name="Training Accuracy"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      );
+      return renderTrainingGraph(selectedChartType);
     }
-
     if (selectedAttack === "comparison") {
-      return (
-        <ResponsiveContainer>
-          <BarChart data={attackResults}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="attack" />
-            <YAxis domain={[50, 100]} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="normal" name="Normal Defense" fill="#4f46e5" />
-            <Bar
-              dataKey="randomized"
-              name="Randomized Defense"
-              fill="#06b6d4"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      );
+      return renderComparisonGraph(selectedChartType);
     }
 
     const attackData = attackResults.filter((a) => {
@@ -306,39 +466,72 @@ export default function CybersecurityPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 dark:from-gray-900 to-white dark:to-gray-800">
-      <div className="flex">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-100 via-purple-300 to-purple-500 dark:from-gray-900 dark:via-purple-900 dark:to-purple-950">
+      <div className="absolute inset-0 bg-grid-white/50 [mask-image:linear-gradient(0deg,white,transparent)] dark:bg-grid-gray-900/50"></div>
+      <div className="flex relative">
         {/* Sidebar */}
         <motion.div
           initial={{ x: -250 }}
           animate={{ x: isSidebarOpen ? 0 : -250 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="fixed h-screen w-64 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm 
-                     border-r border-gray-200 dark:border-gray-700 pt-24 z-40"
+          className="fixed h-screen w-64 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl 
+                     border-r border-gray-200 dark:border-gray-700 pt-24 z-40 shadow-lg"
         >
           {/* Menu Toggle Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-12 top-28 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm 
-                       border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm"
+            className="absolute -right-12 top-28 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl 
+                       border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
             <Menu className="h-5 w-5" />
           </Button>
 
           <div className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-6rem)]">
-            {attackOptions.map((option) => (
-              <Button
-                key={option.id}
-                variant={selectedAttack === option.id ? "default" : "ghost"}
-                className="w-full justify-start transition-colors flex items-center"
-                onClick={() => setSelectedAttack(option.id)}
-              >
-                <option.icon className="mr-3 h-4 w-4 flex-shrink-0" />
-                <span className="truncate">{option.name}</span>
-              </Button>
-            ))}
+            <div className="mb-6">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                Analysis Type
+              </h3>
+              {attackOptions.map((option) => (
+                <Button
+                  key={option.id}
+                  variant={selectedAttack === option.id ? "default" : "ghost"}
+                  className="w-full justify-start transition-colors flex items-center mb-1"
+                  onClick={() => {
+                    setSelectedAttack(option.id);
+                    setSelectedChartType(
+                      option.id === "training" ? "line" : "bar"
+                    );
+                  }}
+                >
+                  <option.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                  <span className="truncate">{option.name}</span>
+                </Button>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                Chart Type
+              </h3>
+              {(selectedAttack === "training"
+                ? chartTypes.training
+                : selectedAttack === "comparison"
+                ? chartTypes.comparison
+                : chartTypes.individual
+              ).map((chart) => (
+                <Button
+                  key={chart.id}
+                  variant={selectedChartType === chart.id ? "default" : "ghost"}
+                  className="w-full justify-start transition-colors flex items-center mb-1"
+                  onClick={() => setSelectedChartType(chart.id)}
+                >
+                  <chart.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                  <span className="truncate">{chart.name}</span>
+                </Button>
+              ))}
+            </div>
           </div>
         </motion.div>
 
@@ -350,21 +543,21 @@ export default function CybersecurityPage() {
         >
           <div className="container px-4 pt-24 pb-8">
             {/* Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {getAttackMetrics(selectedAttack).map((metric, index) => (
                 <motion.div
                   key={metric.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="bg-white/80 dark:bg-gray-800/80 rounded-xl p-6 backdrop-blur-sm border border-gray-200 dark:border-gray-700"
+                  className="bg-white/90 dark:bg-gray-800/90 rounded-xl p-6 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="flex items-center gap-4">
                     <div className={`p-3 rounded-lg ${metric.bgColor}`}>
                       <metric.icon className={`w-6 h-6 ${metric.color}`} />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
                         {metric.value}
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -384,16 +577,16 @@ export default function CybersecurityPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="bg-white/80 dark:bg-gray-800/80 rounded-xl p-6 backdrop-blur-sm border border-gray-200 dark:border-gray-700"
+              className="bg-white/90 dark:bg-gray-800/90 rounded-xl p-6 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl"
             >
-              <h2 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
+              <h2 className="text-xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
                 {selectedAttack === "training"
                   ? "Training Progress"
                   : selectedAttack === "comparison"
                   ? "All Attacks Comparison"
                   : "Attack Analysis"}
               </h2>
-              <div className="h-[400px]">{renderGraph()}</div>
+              <div className="h-[500px]">{renderGraph()}</div>
             </motion.div>
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
   Cpu,
   Lock,
   Zap,
+  Smartphone,
 } from "lucide-react";
 
 const modelArchitecture = [
