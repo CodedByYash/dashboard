@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -23,14 +21,9 @@ import {
 } from "recharts";
 import {
   ArrowUpRight,
-  BarChart2,
-  PieChart as PieChartIcon,
-  LineChart as LineChartIcon,
-  Activity,
   Zap,
   Shield,
   TrendingUp,
-  Target,
   CheckCircle,
   AlertTriangle,
   Clock,

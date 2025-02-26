@@ -39,6 +39,22 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Add these type definitions at the top of the file after the imports
+interface ScenarioData {
+  scenario: string;
+  baseline: number;
+  enhanced: number;
+}
+
+interface MetricData {
+  title: string;
+  value: string;
+  subtitle: string;
+  icon: any; // We'll keep this as any since it's a Lucide icon component
+  color: string;
+  bgColor: string;
+}
+
 // Mock data for autonomous vehicle metrics
 const trainingResults = [
   { epoch: 1, accuracy: 88.5, safety: 85.2 },
@@ -399,7 +415,7 @@ export default function AutonomousVehiclesPage() {
 
   const renderIndividualScenarioGraph = (
     chartType: string,
-    scenarioData: any[]
+    scenarioData: ScenarioData[]
   ) => {
     if (scenarioData.length === 0) return null;
 
