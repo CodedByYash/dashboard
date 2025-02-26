@@ -38,7 +38,6 @@ import {
   LineChart as LineChartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
 
 // Convert CSV data to chart format
 const attackResults = [

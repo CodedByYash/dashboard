@@ -38,7 +38,6 @@ import {
   LineChart as LineChartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
 
 interface AttackData {
   attack: string;
