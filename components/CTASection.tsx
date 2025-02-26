@@ -2,29 +2,72 @@
 
 import { motion } from "framer-motion";
 import { Mail, ArrowRight, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import emailjs from "@emailjs/browser";
 
 export default function CTASection() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{
+    message: string;
+    type: "success" | "error" | null;
+  }>({
+    message: "",
+    type: null,
+  });
+
+  // Initialize EmailJS with your user ID
+  useEffect(() => {
+    emailjs.init({
+      publicKey: "yf8WnGAVlX7UhU0f-", // Replace with your actual EmailJS Public Key
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Add your email handling logic here
-    setTimeout(() => {
+    setStatus({ message: "", type: null });
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        "service_d8epy3g", // Replace with your EmailJS service ID
+        "template_fy6bat8", // Replace with your EmailJS template ID
+        {
+          from_email: email,
+          message: message,
+          reply_to: email,
+        }
+      );
+
+      if (result.status === 200) {
+        setStatus({
+          message: "Your message has been sent successfully!",
+          type: "success",
+        });
+        // Reset form fields on success
+        setEmail("");
+        setMessage("");
+      } else {
+        throw new Error("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setStatus({
+        message: "Failed to send your message. Please try again later.",
+        type: "error",
+      });
+    } finally {
       setIsSubmitting(false);
-      setEmail("");
-      setMessage("");
-    }, 1000);
+    }
   };
 
   return (
     <section
       className="relative py-24 overflow-hidden bg-gradient-to-b from-indigo-50 via-purple-50/50 to-pink-50 
-                        dark:from-indigo-950 dark:via-purple-950 dark:to-pink-950"
+                        dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -33,23 +76,23 @@ export default function CTASection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           className="absolute inset-0 bg-gradient-to-r from-indigo-100/30 via-purple-100/30 to-pink-100/30 
-                     dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10"
+                     dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20"
         />
 
         {/* Enhanced glowing orbs */}
         <div
           className="absolute w-[500px] h-[500px] -left-40 top-0 bg-gradient-to-br from-indigo-200/40 to-purple-200/40 
-                              dark:from-indigo-500/20 dark:to-purple-500/20 rounded-full blur-3xl animate-pulse"
+                              dark:from-indigo-800/20 dark:to-purple-800/20 rounded-full blur-3xl animate-pulse"
         />
         <div
           className="absolute w-[500px] h-[500px] -right-40 bottom-0 bg-gradient-to-br from-purple-200/40 to-pink-200/40 
-                              dark:from-purple-500/20 dark:to-pink-500/20 rounded-full blur-3xl animate-pulse"
+                              dark:from-purple-800/20 dark:to-pink-800/20 rounded-full blur-3xl animate-pulse"
         />
 
         {/* Subtle pattern overlay */}
         <div
           className="absolute inset-0 bg-[linear-gradient(to_right,#88888808_1px,transparent_1px),linear-gradient(to_bottom,#88888808_1px,transparent_1px)] 
-                              bg-[size:24px_24px] opacity-50"
+                              bg-[size:24px_24px] opacity-50 dark:opacity-30"
         />
       </div>
 
@@ -119,6 +162,19 @@ export default function CTASection() {
                   required
                 />
               </div>
+
+              {/* Status message */}
+              {status.type && (
+                <div
+                  className={`p-3 rounded-lg ${
+                    status.type === "success"
+                      ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                      : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                  }`}
+                >
+                  {status.message}
+                </div>
+              )}
 
               <motion.div
                 className="flex justify-end"

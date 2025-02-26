@@ -134,7 +134,7 @@ export default function HeroSection() {
                 icon: LineChart,
                 title: "Deep Model Analysis",
                 description:
-                  "Evaluates model robustness and detects attack vulnerabilities in real time.",
+                  "Evaluates model robustness and detects attack vulnerabilities",
               },
               {
                 icon: Zap,

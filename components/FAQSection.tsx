@@ -11,14 +11,14 @@ const faqs = [
       "It is the process of identifying and mitigating malicious modifications to AI inputs that trick models into making incorrect predictions.",
   },
   {
-    question: "Which industries benefit from this model?",
+    question: "How do adversarial attacks affect machine learning models?",
     answer:
-      "Industries like healthcare, finance, cybersecurity, and autonomous vehicles benefit from adversarial attack detection models.",
+      "Adversarial attacks can cause machine learning models to misclassify inputs with high confidence. This can lead to severe consequences in applications like autonomous driving, medical diagnosis, and cybersecurity, where reliability is crucial.",
   },
   {
-    question: "Is this model open-source?",
+    question: "Is your solution suitable for real-time AI applications?",
     answer:
-      "Yes, our model is open-source, allowing researchers and developers to enhance AI security together.",
+      "Yes, our method is computationally efficient and can be deployed in real-time AI systems, such as fraud detection, autonomous vehicles, and facial recognition, without significant delays.",
   },
   {
     question: "How can I contact for collaboration?",
@@ -31,20 +31,23 @@ export default function FAQSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-blue-50 via-purple-50/50 to-white dark:from-background dark:via-background dark:to-background/80">
+    <section
+      className="relative py-24 overflow-hidden bg-gradient-to-b from-blue-50 via-purple-50/50 to-white 
+                        dark:from-gray-950 dark:via-gray-900 dark:to-gray-950"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-gradient-to-r from-blue-100/30 via-purple-100/30 to-pink-100/30 
-                        dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10"
+                        dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20"
         />
         <div
           className="absolute w-[500px] h-[500px] -right-40 top-0 bg-gradient-to-br from-blue-200/40 to-purple-200/40 
-                        dark:bg-blue-500/20 rounded-full blur-3xl animate-pulse"
+                        dark:from-blue-800/20 dark:to-purple-800/20 rounded-full blur-3xl animate-pulse"
         />
         <div
           className="absolute w-[500px] h-[500px] -left-40 bottom-0 bg-gradient-to-br from-purple-200/40 to-pink-200/40 
-                        dark:bg-purple-500/20 rounded-full blur-3xl animate-pulse"
+                        dark:from-purple-800/20 dark:to-pink-800/20 rounded-full blur-3xl animate-pulse"
         />
       </div>
 
