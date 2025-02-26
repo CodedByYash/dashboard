@@ -34,15 +34,15 @@ const sectors: Sector[] = [
     borderColor: "hover:border-green-500/50",
     href: "/dashboard/finance",
   },
-  {
-    title: "Autonomous Vehicles",
-    description: "Secure autonomous vehicle AI systems",
-    icon: Car,
-    color:
-      "from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20",
-    borderColor: "hover:border-blue-500/50",
-    href: "/dashboard/autonomous",
-  },
+  // {
+  //   title: "Autonomous Vehicles",
+  //   description: "Secure autonomous vehicle AI systems",
+  //   icon: Car,
+  //   color:
+  //     "from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20",
+  //   borderColor: "hover:border-blue-500/50",
+  //   href: "/dashboard/autonomous",
+  // },
   {
     title: "Cybersecurity",
     description: "Enhance AI-driven security system protection",
