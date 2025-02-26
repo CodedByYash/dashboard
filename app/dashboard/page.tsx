@@ -2,7 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { Hospital, Building2, Car, Shield } from "lucide-react";
+import { Hospital, Building2, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
