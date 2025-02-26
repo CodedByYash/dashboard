@@ -38,7 +38,6 @@ import {
   LineChart as LineChartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
 
 // Add these type definitions at the top of the file after the imports
 interface ScenarioData {

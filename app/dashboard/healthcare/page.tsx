@@ -152,14 +152,14 @@ interface AttackData {
   randomized: number;
 }
 
-interface MetricData {
-  title: string;
-  value: string;
-  subtitle: string;
-  icon: LucideIcon;
-  color: string;
-  bgColor: string;
-}
+// interface MetricData {
+//   title: string;
+//   value: string;
+//   subtitle: string;
+//   icon: LucideIcon;
+//   color: string;
+//   bgColor: string;
+// }
 
 export default function FinancePage() {
   const [selectedAttack, setSelectedAttack] = useState("training");
