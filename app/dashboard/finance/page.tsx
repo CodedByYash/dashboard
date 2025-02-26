@@ -156,6 +156,12 @@ interface MetricData {
   bgColor: string;
 }
 
+interface AttackData {
+  attack: string;
+  normal: number;
+  randomized: number;
+}
+
 export default function FinancePage() {
   const [selectedAttack, setSelectedAttack] = useState("training");
   const [selectedChartType, setSelectedChartType] = useState("line");
@@ -401,7 +407,7 @@ export default function FinancePage() {
 
   const renderIndividualAttackGraph = (
     chartType: string,
-    attackData: any[]
+    attackData: AttackData[]
   ) => {
     if (attackData.length === 0) return null;
 

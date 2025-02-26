@@ -146,10 +146,10 @@ const chartTypes = {
   ],
 };
 
-interface HealthcareData {
-  category: string;
-  baseline: number;
-  enhanced: number;
+interface AttackData {
+  attack: string;
+  normal: number;
+  randomized: number;
 }
 
 interface MetricData {
@@ -406,7 +406,7 @@ export default function FinancePage() {
 
   const renderIndividualAttackGraph = (
     chartType: string,
-    attackData: any[]
+    attackData: AttackData[]
   ) => {
     if (attackData.length === 0) return null;
 
